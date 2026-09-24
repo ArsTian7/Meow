@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>喵喵糖果屋 🍬</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <!-- 渐变背景层 -->
+    <div id="bg-layer"></div>
+
+    <!-- 浮动装饰泡泡（纯 CSS 动画） -->
+    <div id="bg-bubbles"></div>
+
+    <!-- 主内容区域 -->
+    <div id="content">
+        <h1 id="title">喵喵糖果屋</h1>
+        <p id="subtitle">✨ 点我一下喵～ ✨</p>
+    </div>
+
+    <!-- 右上角 UI 控制面板 -->
+    <div id="ui-panel" data-no-effect>
+        <!-- 音量开关按钮 -->
+        <button id="volume-btn" data-no-effect title="音量开关">🔊</button>
+        <!-- 点击计数显示 -->
+        <div id="counter" data-no-effect>
+            <span id="counter-icon">🐱</span>
+            <span id="counter-num">0</span> 次喵
+        </div>
+    </div>
+
+    <!-- Canvas 粒子特效层（pointer-events: none 不阻挡交互） -->
+    <canvas id="canvas"></canvas>
+
+    <script src="./script.js"></script>
+</body>
+</html>
