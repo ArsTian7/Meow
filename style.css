@@ -1,6 +1,6 @@
 /* ============================================
-   喵喵糖果屋 - 样式表
-   风格：二次元、可爱、糖果感、动漫 OP 感
+   小天喵喵屋 - 样式表
+   风格：柚子社（Yuzusoft）华丽萌系、视觉冲击力极强
    ============================================ */
 
 /* ---------- 全局重置 ---------- */
@@ -15,27 +15,29 @@ html, body {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    font-family: "Comic Sans MS", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-family: "M PLUS Rounded 1c", "Fredoka One", "PingFang SC", "Microsoft YaHei", sans-serif;
     cursor: pointer;
     user-select: none;
     -webkit-user-select: none;
 }
 
-/* ---------- 渐变背景层 ---------- */
+/* ---------- 渐变背景层（更浓郁、更饱和） ---------- */
 #bg-layer {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
     background: linear-gradient(
         135deg,
-        #ffd6e8 0%,
-        #e8d6ff 25%,
-        #d6f0ff 50%,
-        #d6ffe8 75%,
-        #fff5d6 100%
+        #ffc8e4 0%,
+        #e0c8ff 20%,
+        #c8e0ff 40%,
+        #ffe8f8 55%,
+        #fff0c8 70%,
+        #ffd6e8 85%,
+        #d8c0ff 100%
     );
     background-size: 400% 400%;
-    animation: gradientShift 12s ease infinite;
+    animation: gradientShift 10s ease infinite;
     z-index: 0;
 }
 
@@ -45,7 +47,7 @@ html, body {
     100% { background-position: 0% 50%; }
 }
 
-/* ---------- 浮动装饰泡泡 ---------- */
+/* ---------- 浮动装饰泡泡（更大更梦幻） ---------- */
 #bg-bubbles {
     position: fixed;
     top: 0; left: 0;
@@ -58,24 +60,235 @@ html, body {
 .bubble {
     position: absolute;
     border-radius: 50%;
-    opacity: 0.25;
+    opacity: 0.3;
     animation: floatUp linear infinite;
+    will-change: transform, opacity;
 }
 
 @keyframes floatUp {
     0% {
-        transform: translateY(110vh) scale(0.5);
+        transform: translateY(110vh) scale(0.5) rotate(0deg);
         opacity: 0;
     }
     10% {
-        opacity: 0.25;
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 0.35;
     }
     90% {
         opacity: 0.25;
     }
     100% {
-        transform: translateY(-10vh) scale(1.2);
+        transform: translateY(-10vh) scale(1.4) rotate(180deg);
         opacity: 0;
+    }
+}
+
+/* ---------- 浮动猫咪 Emoji 层（哈基米元素） ---------- */
+#bg-cat-emojis {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.cat-emoji {
+    position: absolute;
+    font-size: 2rem;
+    opacity: 0;
+    animation: floatCatEmoji linear infinite;
+    will-change: transform, opacity;
+    filter: drop-shadow(0 2px 4px rgba(255,107,157,0.3));
+}
+
+@keyframes floatCatEmoji {
+    0% {
+        transform: translateY(110vh) rotate(0deg) scale(0.7);
+        opacity: 0;
+    }
+    8% {
+        opacity: 0.85;
+    }
+    45% {
+        opacity: 0.9;
+    }
+    85% {
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(-15vh) rotate(360deg) scale(1.2);
+        opacity: 0;
+    }
+}
+
+/* ---------- 静态猫爪印装饰（哈基米足迹） ---------- */
+#bg-paw-prints {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.paw-print {
+    position: absolute;
+    font-size: 1.6rem;
+    opacity: 0.35;
+    animation: pawFade 6s ease-in-out infinite alternate;
+    will-change: opacity;
+}
+
+@keyframes pawFade {
+    0%   { opacity: 0.25; }
+    100% { opacity: 0.5; }
+}
+
+/* ---------- 背景大色块爆发（柚子社风格冲击感） ---------- */
+#bg-burst {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0);
+    will-change: transform, opacity;
+}
+
+#bg-burst.active {
+    animation: bgBurst 0.55s ease-out forwards;
+}
+
+@keyframes bgBurst {
+    0%   { opacity: 0.75; transform: scale(0.1); }
+    35%  { opacity: 0.5; transform: scale(1.1); }
+    70%  { opacity: 0.2; transform: scale(1.5); }
+    100% { opacity: 0; transform: scale(2); }
+}
+
+/* 6 组随机糖果色渐变方案，由 JS 随机切换 */
+#bg-burst.burst-pink {
+    background: radial-gradient(circle at 50% 50%,
+        rgba(255,107,157,0.7) 0%,
+        rgba(255,183,197,0.5) 30%,
+        rgba(255,230,240,0.3) 55%,
+        transparent 80%
+    );
+}
+
+#bg-burst.burst-mint {
+    background: radial-gradient(circle at 50% 50%,
+        rgba(127,219,202,0.7) 0%,
+        rgba(168,230,207,0.5) 30%,
+        rgba(220,255,240,0.3) 55%,
+        transparent 80%
+    );
+}
+
+#bg-burst.burst-yellow {
+    background: radial-gradient(circle at 50% 50%,
+        rgba(255,230,109,0.7) 0%,
+        rgba(255,243,176,0.5) 30%,
+        rgba(255,250,220,0.3) 55%,
+        transparent 80%
+    );
+}
+
+#bg-burst.burst-purple {
+    background: radial-gradient(circle at 50% 50%,
+        rgba(176,136,232,0.7) 0%,
+        rgba(201,168,245,0.5) 30%,
+        rgba(230,210,255,0.3) 55%,
+        transparent 80%
+    );
+}
+
+#bg-burst.burst-rainbow {
+    background: radial-gradient(circle at 50% 50%,
+        rgba(255,107,107,0.6) 0%,
+        rgba(255,159,67,0.5) 20%,
+        rgba(255,230,109,0.4) 40%,
+        rgba(78,205,196,0.3) 60%,
+        rgba(176,136,232,0.2) 75%,
+        transparent 90%
+    );
+}
+
+#bg-burst.burst-candy {
+    background: radial-gradient(circle at 50% 50%,
+        rgba(255,159,243,0.7) 0%,
+        rgba(255,107,157,0.5) 25%,
+        rgba(255,230,109,0.4) 50%,
+        rgba(127,219,202,0.3) 70%,
+        transparent 90%
+    );
+}
+
+/* ---------- 全屏闪白遮罩 ---------- */
+#flash-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(255,220,240,0.6) 40%, transparent 70%);
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0);
+    will-change: transform, opacity;
+}
+
+#flash-overlay.active {
+    animation: flashBurst 0.4s ease-out forwards;
+}
+
+@keyframes flashBurst {
+    0%   { opacity: 0.9; transform: scale(0.2); }
+    30%  { opacity: 0.6; transform: scale(1.2); }
+    100% { opacity: 0; transform: scale(2); }
+}
+
+/* ---------- 彩虹冲击波（纯 transform 动画，GPU 加速） ---------- */
+#shockwave {
+    position: fixed;
+    top: 0; left: 0;
+    width: 200vmax; height: 200vmax;
+    border-radius: 50%;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+    will-change: transform, opacity;
+    background: radial-gradient(circle,
+        rgba(255,107,157,0.6) 0%,
+        rgba(255,230,109,0.4) 20%,
+        rgba(78,205,196,0.3) 40%,
+        rgba(176,136,232,0.2) 60%,
+        transparent 80%
+    );
+    /* 通过 CSS 变量定位到点击位置 */
+    left: var(--sw-x, 50%);
+    top: var(--sw-y, 50%);
+}
+
+#shockwave.active {
+    animation: shockwaveBurst 0.6s ease-out forwards;
+}
+
+@keyframes shockwaveBurst {
+    0% {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(0);
+    }
+    50% {
+        opacity: 0.4;
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1);
     }
 }
 
@@ -95,56 +308,117 @@ html, body {
 
 /* 点击时的轻微弹跳反馈 */
 #content.bounce {
-    animation: contentBounce 0.2s ease-out;
+    animation: contentBounce 0.25s ease-out;
 }
 
 @keyframes contentBounce {
     0%   { transform: scale(1); }
-    40%  { transform: scale(1.015); }
+    30%  { transform: scale(1.03); }
+    60%  { transform: scale(0.99); }
     100% { transform: scale(1); }
 }
 
-/* ---------- 标题 ---------- */
+/* ---------- 标题（超大、发光、描边、微动效） ---------- */
 #title {
-    font-size: clamp(2.5rem, 8vw, 5rem);
-    color: #ff6b9d;
+    font-family: "Fredoka One", "M PLUS Rounded 1c", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: clamp(3rem, 10vw, 6rem);
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 0.08em;
+    /* 粉色/黄色描边 + 多层发光 */
     text-shadow:
-        0 0 20px rgba(255, 107, 157, 0.5),
-        0 0 40px rgba(255, 107, 157, 0.3),
-        0 2px 4px rgba(0, 0, 0, 0.1);
-    letter-spacing: 0.1em;
-    animation: titlePulse 3s ease-in-out infinite;
+        /* 内层描边 - 粉色 */
+        -2px -2px 0 #ff6b9d,
+        2px -2px 0 #ff6b9d,
+        -2px 2px 0 #ff6b9d,
+        2px 2px 0 #ff6b9d,
+        0 -3px 0 #ff85b3,
+        0 3px 0 #ff85b3,
+        -3px 0 0 #ff85b3,
+        3px 0 0 #ff85b3,
+        /* 外层描边 - 黄色 */
+        -4px -4px 0 rgba(255,230,109,0.7),
+        4px -4px 0 rgba(255,230,109,0.7),
+        -4px 4px 0 rgba(255,230,109,0.7),
+        4px 4px 0 rgba(255,230,109,0.7),
+        /* 发光层 */
+        0 0 30px rgba(255,107,157,0.8),
+        0 0 60px rgba(255,107,157,0.5),
+        0 0 100px rgba(255,230,109,0.3),
+        0 0 140px rgba(176,136,232,0.2),
+        /* 阴影 */
+        0 4px 8px rgba(0,0,0,0.15);
+    animation: titlePulse 2.5s ease-in-out infinite;
+    /* 微浮动 */
+    position: relative;
 }
 
 @keyframes titlePulse {
     0%, 100% {
+        transform: scale(1) translateY(0);
         text-shadow:
-            0 0 20px rgba(255, 107, 157, 0.5),
-            0 0 40px rgba(255, 107, 157, 0.3),
-            0 2px 4px rgba(0, 0, 0, 0.1);
-        transform: scale(1);
+            -2px -2px 0 #ff6b9d,
+            2px -2px 0 #ff6b9d,
+            -2px 2px 0 #ff6b9d,
+            2px 2px 0 #ff6b9d,
+            0 -3px 0 #ff85b3,
+            0 3px 0 #ff85b3,
+            -3px 0 0 #ff85b3,
+            3px 0 0 #ff85b3,
+            -4px -4px 0 rgba(255,230,109,0.7),
+            4px -4px 0 rgba(255,230,109,0.7),
+            -4px 4px 0 rgba(255,230,109,0.7),
+            4px 4px 0 rgba(255,230,109,0.7),
+            0 0 30px rgba(255,107,157,0.8),
+            0 0 60px rgba(255,107,157,0.5),
+            0 0 100px rgba(255,230,109,0.3),
+            0 0 140px rgba(176,136,232,0.2),
+            0 4px 8px rgba(0,0,0,0.15);
     }
     50% {
+        transform: scale(1.04) translateY(-4px);
         text-shadow:
-            0 0 30px rgba(255, 107, 157, 0.7),
-            0 0 60px rgba(255, 107, 157, 0.4),
-            0 2px 4px rgba(0, 0, 0, 0.1);
-        transform: scale(1.02);
+            -2px -2px 0 #ff6b9d,
+            2px -2px 0 #ff6b9d,
+            -2px 2px 0 #ff6b9d,
+            2px 2px 0 #ff6b9d,
+            0 -3px 0 #ff85b3,
+            0 3px 0 #ff85b3,
+            -3px 0 0 #ff85b3,
+            3px 0 0 #ff85b3,
+            -4px -4px 0 rgba(255,230,109,0.8),
+            4px -4px 0 rgba(255,230,109,0.8),
+            -4px 4px 0 rgba(255,230,109,0.8),
+            4px 4px 0 rgba(255,230,109,0.8),
+            0 0 40px rgba(255,107,157,0.9),
+            0 0 80px rgba(255,107,157,0.6),
+            0 0 120px rgba(255,230,109,0.4),
+            0 0 160px rgba(176,136,232,0.3),
+            0 6px 12px rgba(0,0,0,0.2);
     }
 }
 
 /* ---------- 副标题 ---------- */
 #subtitle {
-    font-size: clamp(1rem, 3vw, 1.6rem);
-    color: #b088e8;
-    margin-top: 1rem;
-    text-shadow: 0 0 10px rgba(176, 136, 232, 0.4);
+    font-family: "M PLUS Rounded 1c", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: clamp(1.2rem, 4vw, 2rem);
+    font-weight: 700;
+    color: #fff;
+    margin-top: 1.2rem;
+    text-shadow:
+        -1px -1px 0 #b088e8,
+        1px -1px 0 #b088e8,
+        -1px 1px 0 #b088e8,
+        1px 1px 0 #b088e8,
+        0 0 15px rgba(176,136,232,0.6),
+        0 0 30px rgba(255,107,157,0.4),
+        0 2px 4px rgba(0,0,0,0.1);
     animation: subtitleFade 2s ease-in-out infinite alternate;
 }
 
 @keyframes subtitleFade {
-    0%   { opacity: 0.7; }
-    100% { opacity: 1; }
+    0%   { opacity: 0.75; transform: translateY(0); }
+    100% { opacity: 1; transform: translateY(-3px); }
 }
 
 /* ---------- 右上角 UI 面板 ---------- */
@@ -161,19 +435,20 @@ html, body {
 
 /* ---------- 音量按钮 ---------- */
 #volume-btn {
-    width: 48px;
-    height: 48px;
-    border: none;
+    width: 52px;
+    height: 52px;
+    border: 2px solid rgba(255,107,157,0.3);
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.35);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     box-shadow:
-        0 2px 12px rgba(255, 107, 157, 0.2),
-        inset 0 1px 1px rgba(255, 255, 255, 0.5);
-    font-size: 1.4rem;
+        0 2px 16px rgba(255, 107, 157, 0.3),
+        0 0 30px rgba(255,230,109,0.15),
+        inset 0 1px 2px rgba(255, 255, 255, 0.6);
+    font-size: 1.5rem;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.25s ease;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -181,28 +456,33 @@ html, body {
 }
 
 #volume-btn:hover {
-    background: rgba(255, 255, 255, 0.55);
-    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.6);
+    transform: scale(1.15) rotate(10deg);
     box-shadow:
-        0 4px 20px rgba(255, 107, 157, 0.35),
-        inset 0 1px 1px rgba(255, 255, 255, 0.6);
+        0 4px 24px rgba(255, 107, 157, 0.45),
+        0 0 40px rgba(255,230,109,0.25),
+        inset 0 2px 2px rgba(255, 255, 255, 0.7);
+    border-color: rgba(255,107,157,0.5);
 }
 
 #volume-btn:active {
-    transform: scale(0.95);
+    transform: scale(0.92);
 }
 
 /* ---------- 点击计数器 ---------- */
 #counter {
-    background: rgba(255, 255, 255, 0.35);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-radius: 20px;
-    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 24px;
+    padding: 10px 20px;
+    border: 2px solid rgba(176,136,232,0.25);
     box-shadow:
-        0 2px 12px rgba(176, 136, 232, 0.2),
-        inset 0 1px 1px rgba(255, 255, 255, 0.5);
-    font-size: 1rem;
+        0 2px 16px rgba(176, 136, 232, 0.25),
+        0 0 30px rgba(255,107,157,0.1),
+        inset 0 1px 2px rgba(255, 255, 255, 0.6);
+    font-size: 1.1rem;
+    font-weight: 700;
     color: #7c5cbf;
     display: flex;
     align-items: center;
@@ -211,27 +491,54 @@ html, body {
 }
 
 #counter-icon {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+    animation: catWiggle 1.5s ease-in-out infinite;
+}
+
+@keyframes catWiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-8deg); }
+    75% { transform: rotate(8deg); }
 }
 
 #counter-num {
-    font-weight: bold;
-    font-size: 1.2rem;
+    font-weight: 900;
+    font-size: 1.3rem;
     color: #ff6b9d;
     min-width: 1.5em;
     text-align: center;
     transition: transform 0.15s ease;
+    text-shadow: 0 0 8px rgba(255,107,157,0.4);
 }
 
 /* 计数增加时的弹跳动画 */
 #counter-num.pop {
-    animation: counterPop 0.25s ease;
+    animation: counterPop 0.3s ease;
 }
 
 @keyframes counterPop {
     0%   { transform: scale(1); }
-    50%  { transform: scale(1.4); }
+    40%  { transform: scale(1.5); color: #ffe66d; }
     100% { transform: scale(1); }
+}
+
+/* ---------- 屏幕震动效果（应用到 body） ---------- */
+body.shake {
+    animation: screenShake 0.3s ease-out;
+}
+
+@keyframes screenShake {
+    0%   { transform: translate(0, 0); }
+    10%  { transform: translate(-3px, -2px); }
+    20%  { transform: translate(4px, 1px); }
+    30%  { transform: translate(-2px, 3px); }
+    40%  { transform: translate(3px, -1px); }
+    50%  { transform: translate(-1px, 2px); }
+    60%  { transform: translate(2px, -2px); }
+    70%  { transform: translate(-3px, 1px); }
+    80%  { transform: translate(1px, -1px); }
+    90%  { transform: translate(-1px, 1px); }
+    100% { transform: translate(0, 0); }
 }
 
 /* ---------- Canvas 特效层 ---------- */
@@ -243,6 +550,22 @@ html, body {
     pointer-events: none;
 }
 
+/* ---------- FPS 计数器（左下角极简显示） ---------- */
+#fps-counter {
+    position: fixed;
+    bottom: 8px;
+    left: 8px;
+    z-index: 20;
+    font-family: monospace;
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    background: rgba(0,0,0,0.25);
+    padding: 2px 6px;
+    border-radius: 4px;
+    pointer-events: none;
+    user-select: none;
+}
+
 /* ---------- 移动端适配 ---------- */
 @media (max-width: 600px) {
     #ui-panel {
@@ -252,13 +575,21 @@ html, body {
     }
 
     #volume-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 1.2rem;
+        width: 44px;
+        height: 44px;
+        font-size: 1.3rem;
     }
 
     #counter {
-        font-size: 0.85rem;
-        padding: 6px 12px;
+        font-size: 0.9rem;
+        padding: 8px 14px;
+    }
+
+    #title {
+        font-size: clamp(2.5rem, 12vw, 4rem);
+    }
+
+    #subtitle {
+        font-size: clamp(1rem, 5vw, 1.5rem);
     }
 }

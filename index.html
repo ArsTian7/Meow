@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>喵喵糖果屋 🍬</title>
+    <title>小天喵喵屋 🍬</title>
+    <!-- Google Fonts: 圆润可爱英文字体 + 日文圆体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=M+PLUS+Rounded+1c:wght@700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -13,10 +17,25 @@
     <!-- 浮动装饰泡泡（纯 CSS 动画） -->
     <div id="bg-bubbles"></div>
 
+    <!-- 浮动猫咪 Emoji 层（纯 CSS 动画） -->
+    <div id="bg-cat-emojis"></div>
+
+    <!-- 静态猫爪印装饰层 -->
+    <div id="bg-paw-prints"></div>
+
+    <!-- 背景大色块爆发（点击时触发，GPU 加速） -->
+    <div id="bg-burst"></div>
+
+    <!-- 全屏闪白遮罩（点击时触发） -->
+    <div id="flash-overlay"></div>
+
+    <!-- 彩虹冲击波（点击时触发） -->
+    <div id="shockwave"></div>
+
     <!-- 主内容区域 -->
     <div id="content">
-        <h1 id="title">喵喵糖果屋</h1>
-        <p id="subtitle">✨ 点我一下喵～ ✨</p>
+        <h1 id="title">小天喵喵屋</h1>
+        <p id="subtitle">点我一下喵～</p>
     </div>
 
     <!-- 右上角 UI 控制面板 -->
@@ -32,6 +51,9 @@
 
     <!-- Canvas 粒子特效层（pointer-events: none 不阻挡交互） -->
     <canvas id="canvas"></canvas>
+
+    <!-- 极简 FPS 计数器（左下角） -->
+    <div id="fps-counter" data-no-effect></div>
 
     <script src="./script.js"></script>
 </body>
