@@ -8,19 +8,19 @@
 // 一、配置常量
 // ==========================================
 var CONFIG = {
-    MAX_PARTICLES: 700,           // 最大粒子数量上限（降低以优化性能）
-    MIN_TYPES: 1,                 // 每次点击最少粒子种类（减少 30%）
-    MAX_TYPES: 3,                 // 每次点击最多粒子种类
-    MIN_PER_TYPE: 3,              // 每种粒子最少数量（减少）
-    MAX_PER_TYPE: 5,              // 每种粒子最多数量（减少）
-    MAX_DPR: 1.5,                 // 设备像素比上限（避免 4K 屏渲染海量像素）
+    MAX_PARTICLES: 250,           // 最大粒子数量上限（手机端大幅降低）
+    MIN_TYPES: 1,                 // 每次点击最少粒子种类
+    MAX_TYPES: 2,                 // 每次点击最多粒子种类（降低）
+    MIN_PER_TYPE: 2,              // 每种粒子最少数量
+    MAX_PER_TYPE: 3,              // 每种粒子最多数量
+    MAX_DPR: 1.0,                 // 设备像素比上限 1.0（手机端渲染量减半）
     // 超大粒子尺寸配置
-    BIG_MIN_SIZE: 35,             // 底层大糖果最小尺寸（略小）
-    BIG_MAX_SIZE: 70,             // 底层大糖果最大尺寸（略小）
-    MID_MIN_SIZE: 14,             // 中层星星尺寸
-    MID_MAX_SIZE: 26,
-    TOP_MIN_SIZE: 4,              // 顶层闪光尺寸
-    TOP_MAX_SIZE: 10,
+    BIG_MIN_SIZE: 30,             // 底层大糖果最小尺寸
+    BIG_MAX_SIZE: 55,             // 底层大糖果最大尺寸
+    MID_MIN_SIZE: 12,             // 中层星星尺寸
+    MID_MAX_SIZE: 22,
+    TOP_MIN_SIZE: 3,              // 顶层闪光尺寸
+    TOP_MAX_SIZE: 8,
     AUDIO_PATHS: [                // 喵叫音频文件路径（相对路径）
         './assets/audio/meow1.mp3',
         './assets/audio/meow2.mp3',
@@ -41,9 +41,9 @@ var CONFIG = {
         '#FF6B6B', '#FF9F43', '#FFE66D',
         '#4ECDC4', '#45B7D1', '#54A0FF', '#B088E8'
     ],
-    BUBBLE_COUNT: 18,            // 背景装饰泡泡数量
-    CAT_EMOJI_COUNT: 20,         // 浮动猫咪 Emoji 数量
-    PAW_PRINT_COUNT: 12          // 静态猫爪印数量
+    BUBBLE_COUNT: 8,             // 背景装饰泡泡数量（降低）
+    CAT_EMOJI_COUNT: 0,          // 浮动猫咪 Emoji（手机端性能杀手，关闭）
+    PAW_PRINT_COUNT: 6           // 静态猫爪印数量（降低）
 };
 
 // ==========================================
@@ -935,11 +935,11 @@ var PARTICLE_DRAW = {
 
 var PARTICLE_TYPES = Object.keys(PARTICLE_DRAW);
 
-// 分层配置：底层大糖果、中层星星、顶层闪光（加入猫脸和小鱼增加哈基米浓度）
+// 分层配置：大幅减少每层粒子数，移除高开销的 catFace/rainbowTrail
 var LAYER_CONFIG = {
-    bottom: { types: ['candy', 'lollipop', 'macaron', 'iceCream', 'donut', 'catFace'], sizeMin: 'BIG_MIN_SIZE', sizeMax: 'BIG_MAX_SIZE', speedRange: [3, 10], count: 3 },
-    middle: { types: ['heart', 'star', 'bow', 'catPaw', 'bubble', 'fish', 'catFace'], sizeMin: 'MID_MIN_SIZE', sizeMax: 'MID_MAX_SIZE', speedRange: [2, 7], count: 6 },
-    top:    { types: ['sparkle', 'rainbowTrail', 'fish'], sizeMin: 'TOP_MIN_SIZE', sizeMax: 'TOP_MAX_SIZE', speedRange: [1, 5], count: 7 }
+    bottom: { types: ['candy', 'lollipop', 'macaron', 'catFace'], sizeMin: 'BIG_MIN_SIZE', sizeMax: 'BIG_MAX_SIZE', speedRange: [3, 8], count: 2 },
+    middle: { types: ['heart', 'star', 'catPaw', 'fish'], sizeMin: 'MID_MIN_SIZE', sizeMax: 'MID_MAX_SIZE', speedRange: [2, 6], count: 3 },
+    top:    { types: ['sparkle', 'fish'], sizeMin: 'TOP_MIN_SIZE', sizeMax: 'TOP_MAX_SIZE', speedRange: [1, 4], count: 3 }
 };
 
 // ==========================================
@@ -959,7 +959,7 @@ function spawnParticles(x, y) {
 
     for (var li = 0; li < layerKeys.length; li++) {
         var layer = LAYER_CONFIG[layerKeys[li]];
-        var layerCount = layer.count + randInt(0, 2);
+        var layerCount = layer.count + randInt(0, 1);
 
         for (var i = 0; i < layerCount; i++) {
             // 超过上限时移除最旧粒子
@@ -984,7 +984,7 @@ function spawnParticles(x, y) {
                 rotation: Math.random() * Math.PI * 2,
                 rotationSpeed: randRange(-0.06, 0.06),
                 life: 1,
-                decay: randRange(0.006, 0.016),
+                decay: randRange(0.012, 0.028),
                 color: randColor(),
                 color2: randColor(),
                 gravity: (type === 'bubble') ? -0.03 : 0.04,
@@ -998,8 +998,8 @@ function spawnParticles(x, y) {
         }
     }
 
-    // 额外生成一圈环绕的小闪光（减少数量以优化性能）
-    var sparkleCount = randInt(4, 8);
+    // 额外生成一圈环绕的小闪光（数量大幅减少）
+    var sparkleCount = randInt(2, 4);
     for (var s = 0; s < sparkleCount; s++) {
         if (particles.length >= CONFIG.MAX_PARTICLES) break;
 
@@ -1017,7 +1017,7 @@ function spawnParticles(x, y) {
             rotation: Math.random() * Math.PI * 2,
             rotationSpeed: randRange(-0.1, 0.1),
             life: 1,
-            decay: randRange(0.02, 0.04),
+            decay: randRange(0.03, 0.05),
             color: randRainbow(),
             color2: '#fff',
             gravity: 0.02,
@@ -1055,31 +1055,8 @@ function updateParticles() {
         // 缩放脉动
         p.scalePhase += 0.1;
 
-        // 拖尾粒子额外生成小尾迹
-        if (p.trail && p.life > 0.3 && Math.random() < 0.3) {
-            if (particles.length < CONFIG.MAX_PARTICLES) {
-                particles.push({
-                    type: 'sparkle',
-                    x: p.x,
-                    y: p.y,
-                    vx: randRange(-0.5, 0.5),
-                    vy: randRange(-0.5, 0.5),
-                    size: p.size * 0.3,
-                    alpha: p.alpha * 0.6,
-                    rotation: Math.random() * Math.PI * 2,
-                    rotationSpeed: randRange(-0.05, 0.05),
-                    life: p.life * 0.4,
-                    decay: 0.03,
-                    color: randRainbow(),
-                    color2: '#fff',
-                    gravity: 0.01,
-                    friction: 0.99,
-                    scalePhase: 0,
-                    trail: false,
-                    layer: 'top'
-                });
-            }
-        }
+        // 拖尾粒子：手机端关闭拖尾增殖，大幅减少额外粒子
+        // （原逻辑每帧 30% 概率生成子粒子，手机端完全跳过）
 
         // 移除已消亡的粒子
         if (p.life <= 0) {
